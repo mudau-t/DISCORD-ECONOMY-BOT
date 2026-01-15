@@ -1,40 +1,27 @@
-const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("../../handlers/userHandler");
-const { isOwner, isGuard } = require("../../handlers/permHandler");
+const { getDisplayRole } = require("../../handlers/permHandler");
 
 module.exports = {
-  name: "p",
-  aliases: ["profile"],
+  name: "profile",
+  aliases: ["p"],
   category: "profile",
 
   execute(message) {
-    const member =
-      message.mentions.members.first() || message.member;
+    const userData = getUser(message.author.id);
+    const member = message.member;
 
-    const userData = getUser(member.id);
+    const role = getDisplayRole(member);
 
-    let role = "USER";
-    if (isOwner(member.id)) role = "OWNER";
-    else if (isGuard(member)) role = "GUARD";
-
-    const embed = new EmbedBuilder()
-      .setColor("#FFD700")
-      .setAuthor({
-        name: "Re:Zero Profile",
-        iconURL: member.user.displayAvatarURL({ dynamic: true })
-      })
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
-      .setDescription("**Official Re:Zero | Nexus user profile**")
-      .addFields(
-        { name: "NAME", value: member.user.username, inline: false },
-        { name: "ROLE", value: role, inline: false },
-        {
-          name: "WALLET",
-          value: `R${userData.balance.toLocaleString()}`,
-          inline: false
-        },
-        {
-          name: "BANK",
+    message.reply(
+      `👤 **PROFILE**\n\n` +
+      `🆔 User: **${message.author.username}**\n` +
+      `🎭 Role: **${role}**\n\n` +
+      `💰 Wallet: **R ${userData.wallet}**\n` +
+      `🏦 Bank: **R ${userData.bank}**\n` +
+      `💎 Net Worth: **R ${userData.wallet + userData.bank}**`
+    );
+  }
+};          name: "BANK",
           value: `R${userData.bank.toLocaleString()}`,
           inline: false
         },
