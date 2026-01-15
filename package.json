@@ -1,0 +1,17 @@
+{
+  "name": "discord-gambling-bot",
+  "version": "1.0.0",
+  "description": "A fun Discord gambling bot using Rands (R) currency",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "author": "mudau_t",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1"
+  }
+}
